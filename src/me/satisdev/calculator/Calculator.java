@@ -1,85 +1,48 @@
-import java.util.InputMismatchException;
+package me.satisdev.calculator;
+
 import java.util.Scanner;
 
 public class Calculator {
 
+    private double first, second, result;
+    private String operator;
+
     private Scanner scanner;
+    private Verifier verifier;
 
     public Calculator() {
         this.scanner = new Scanner(System.in);
-    }
-
-    public void calculate(String expression) {
-        char[] sections = expression.toCharArray();
+        this.verifier = new Verifier();
     }
 
     public void calculate() {
-        String s1 = "\nPlease input your first number: ";
-        String s2 = "\nPlease input an arithmetic operator (ie. + - * / % ): ";
-        String s3 = "\nPlease input your second number: ";
+        boolean unverified = true;
 
-        double firstNum = verifyNumber(s1);
-        String operator = verifyOperator(s2);
-        double secondNum = verifyNumber(s3);
+        while (unverified) {
+            System.out.print("\nPlease input your first number: ");
+            first = verifier.verifyNumber(scanner.next());
 
-        System.out.print("\n" + firstNum + " " + operator + " " + secondNum + " = ");
-
-        result(firstNum, operator, secondNum);
-    }
-
-    public void result(double firstNum, String operator, double secondNum) {
-        switch (operator) {
-            case "+":
-                System.out.println((firstNum + secondNum) + "\n");
-                break;
-
-            case "-":
-                System.out.println((firstNum - secondNum) + "\n");
-                break;
-
-            case "*":
-                System.out.println((firstNum * secondNum) + "\n");
-                break;
-
-            case "/":
-                System.out.println((firstNum / secondNum) + "\n");
-                break;
-
-            case "%":
-                System.out.println((firstNum % secondNum) + "\n");
-                break;
+            if (!Double.isNaN(first)) break;
         }
-    }
 
-    public String verifyOperator(String prompt) {
-        String[] operators = {"+", "-", "*", "/", "%"};
+        while (unverified) {
+            System.out.print("\nPlease input an arithmetic operator: ");
+            operator = verifier.verifyOperator(scanner.next());
 
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.next();
-
-            for (String operator : operators) {
-                if (input.equals(operator)) return input;
-            }
-
-            System.out.println("\nYou must input a proper operator!");
-            System.out.println("Please try again.");
+            if (operator != null) break;
         }
-    }
 
-    public double verifyNumber(String prompt) {
+        while (unverified) {
+            System.out.print("\nPlease input your second number: ");
+            second = verifier.verifyNumber(scanner.next());
 
-        while (true) {
-            try {
-
-                System.out.print(prompt);
-                return scanner.nextDouble();
-
-            } catch (InputMismatchException e) {
-                System.out.println("\nYou must input a number!");
-                System.out.println("Please try again.");
-                scanner.next();
-            }
+            if (!Double.isNaN(second)) break;
         }
+
+        result = verifier.result(first, operator, second);
+
+        System.out.println();
+        System.out.println(first + " " + operator + " " + second + " = " + result);
+        System.out.println();
     }
 }
