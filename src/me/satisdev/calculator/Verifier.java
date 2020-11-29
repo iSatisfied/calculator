@@ -4,7 +4,7 @@ import java.lang.NumberFormatException;
 
 public class Verifier {
 
-    private String[] operators = {"+", "-", "*", "/", "%"};
+    protected static String[] operators = {"+", "-", "*", "/", "%"};
 
     public double verifyNumber(String input) {
         try {
