@@ -14,6 +14,8 @@ public class Parser {
 
         if (input.length == 1) calc.calculate(input[0]);
 
+        if (input.length == 3) calc.calculate(input);
+
     }
 
 }

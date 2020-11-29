@@ -62,10 +62,10 @@ public class Calculator {
             String[] numbers = operator.equals("+") || operator.equals("*")
                               ? input.split("\\" + operator) : input.split(operator);
 
-            first = verifier.verifyNumber(numbers[0]);
-            second = verifier.verifyNumber(numbers[1]);
+            this.first = verifier.verifyNumber(numbers[0]);
+            this.second = verifier.verifyNumber(numbers[1]);
 
-            if (Double.isNaN(first) || Double.isNaN(second)) break;
+            if (Double.isNaN(this.first) || Double.isNaN(this.second)) break;
 
             this.result = verifier.result(this.first, operator, this.second);
 
@@ -76,5 +76,24 @@ public class Calculator {
             return;
         }
         invalidExpression();
+    }
+
+    public void calculate(String[] input) {
+        this.first = verifier.verifyNumber(input[0]);
+        this.operator = verifier.verifyOperator(input[1]);
+        this.second = verifier.verifyNumber(input[2]);
+
+        if (Double.isNaN(this.first) ||
+            Double.isNaN(this.second) ||
+            operator.isEmpty()) {
+                invalidExpression();
+                return;
+        }
+        this.result = verifier.result(this.first, operator, this.second);
+
+        System.out.println();
+        System.out.println(this.first + " " + operator + " " +
+                            this.second + " = " + this.result);
+        System.out.println();
     }
 }
