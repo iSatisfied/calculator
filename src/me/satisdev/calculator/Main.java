@@ -3,8 +3,8 @@ package me.satisdev.calculator;
 public class Main {
 
     public static void main(String[] args) {
-        Parser parser = new Parser();
+        CalculatorParser cparser = new CalculatorParser();
 
-        parser.parse(args);
+        cparser.parse(args);
     }
 }

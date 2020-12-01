@@ -4,7 +4,9 @@ import java.lang.NumberFormatException;
 
 public class Verifier {
 
-    private String[] operators = {"+", "-", "*", "/", "%"};
+    private double result;
+
+    protected static String[] operators = {"+", "-", "*", "/", "%"};
 
     public double verifyNumber(String input) {
         try {
@@ -17,27 +19,37 @@ public class Verifier {
     public String verifyOperator(String input) {
         for (String operator : operators) if (input.equals(operator)) return input;
 
-        return null;
+        return "";
     }
 
-    public double result(double firstNum, String operator, double secondNum) {
+    public void result(double first, String operator, double second) {
         switch (operator) {
             case "+":
-                return Operations.add(firstNum, secondNum);
+                result = Operations.add(first, second);
+                break;
 
             case "-":
-                return Operations.subtract(firstNum, secondNum);
+                result = Operations.subtract(first, second);
+                break;
 
             case "*":
-                return Operations.multiply(firstNum, secondNum);
+                result =  Operations.multiply(first, second);
+                break;
 
             case "/":
-                return Operations.divide(firstNum, secondNum);
+                result =  Operations.divide(first, second);
+                break;
 
             case "%":
-                return Operations.remainder(firstNum, secondNum);
+                result =  Operations.remainder(first, second);
+                break;
+
             default:
-                return Double.NaN;
+                result = Double.NaN;
         }
+
+        System.out.println();
+        System.out.println(first + " " + operator + " " + second + " = " + result);
+        System.out.println();
     }
 }
