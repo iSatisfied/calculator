@@ -1,0 +1,7 @@
+Usage: main [expression]
+
+  Expressions can be provided with or without spaces: [5+5, 5 + 5]
+
+  Expressions must be provided in the order provided below:
+    First Number    Operator    Second Number
+         5             +              5

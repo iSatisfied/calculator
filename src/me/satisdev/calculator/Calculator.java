@@ -4,55 +4,52 @@ import java.util.Scanner;
 
 public class Calculator {
 
-    private double first, second, result;
+    private double first, second;
     private String operator;
 
+    private FileParser fparser;
     private Scanner scanner;
     private Verifier verifier;
 
     public Calculator() {
+        this.first = Double.NaN;
+        this.second = Double.NaN;
+        this.operator = "";
+
         this.scanner = new Scanner(System.in);
         this.verifier = new Verifier();
-    }
-
-    private void invalidExpression() {
-        System.out.println("\nYou have provided an improper expression.");
-        System.out.println("A proper expression example is provided below:");
-        System.out.println();
-        System.out.println("  First Number    Operator    Second Number");
-        System.out.println("       5             +              5\n");
+        this.fparser = new FileParser();
     }
 
     public void calculate() {
         boolean unverified = true;
 
         while (unverified) {
-            System.out.print("\nPlease input your first number: ");
-            this.first = verifier.verifyNumber(scanner.next());
 
-            if (!Double.isNaN(this.first)) break;
+            if (Double.isNaN(this.first)) {
+                System.out.print("\nPlease input a valid first number: ");
+                this.first = verifier.verifyNumber(scanner.next());
+
+                continue;
+            }
+
+            if (this.operator.isEmpty()) {
+                System.out.print("\nPlease input a valid arithmetic operator: ");
+                this.operator = verifier.verifyOperator(scanner.next());
+
+                continue;
+            }
+
+            if (Double.isNaN(this.second)) {
+                System.out.print("\nPlease input a valid second number: ");
+                this.second = verifier.verifyNumber(scanner.next());
+
+                continue;
+
+            }
+            unverified = false;
         }
-
-        while (unverified) {
-            System.out.print("\nPlease input an arithmetic operator: ");
-            this.operator = verifier.verifyOperator(scanner.next());
-
-            if (this.operator != null) break;
-        }
-
-        while (unverified) {
-            System.out.print("\nPlease input your second number: ");
-            this.second = verifier.verifyNumber(scanner.next());
-
-            if (!Double.isNaN(this.second)) break;
-        }
-
-        this.result = verifier.result(this.first, this.operator, this.second);
-
-        System.out.println();
-        System.out.println(this.first + " " + this.operator + " " +
-                            this.second + " = " + this.result);
-        System.out.println();
+        verifier.result(this.first, this.operator, this.second);
     }
 
     public void calculate(String input) {
@@ -67,15 +64,10 @@ public class Calculator {
 
             if (Double.isNaN(this.first) || Double.isNaN(this.second)) break;
 
-            this.result = verifier.result(this.first, operator, this.second);
-
-            System.out.println();
-            System.out.println(this.first + " " + operator + " " +
-                                this.second + " = " + this.result);
-            System.out.println();
+            verifier.result(this.first, operator, this.second);
             return;
         }
-        invalidExpression();
+        fparser.getFailureFile();
     }
 
     public void calculate(String[] input) {
@@ -86,14 +78,9 @@ public class Calculator {
         if (Double.isNaN(this.first) ||
             Double.isNaN(this.second) ||
             operator.isEmpty()) {
-                invalidExpression();
+                fparser.getFailureFile();
                 return;
         }
-        this.result = verifier.result(this.first, operator, this.second);
-
-        System.out.println();
-        System.out.println(this.first + " " + operator + " " +
-                            this.second + " = " + this.result);
-        System.out.println();
+        verifier.result(this.first, operator, this.second);
     }
 }
