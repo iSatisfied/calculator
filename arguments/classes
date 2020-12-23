@@ -1,0 +1,6 @@
+src/me/satisdev/calculator/Main.java
+src/me/satisdev/calculator/Calculator.java
+src/me/satisdev/calculator/Verifier.java
+src/me/satisdev/calculator/Operations.java
+src/me/satisdev/calculator/parsers/FileParser.java
+src/me/satisdev/calculator/parsers/CalculatorParser.java
