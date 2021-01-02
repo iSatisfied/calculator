@@ -1,10 +1,12 @@
 package me.satisdev.calculator;
 
+import me.satisdev.calculator.parsers.InputParser;
+
 public class Main {
 
     public static void main(String[] args) {
-        CalculatorParser cparser = new CalculatorParser();
+        InputParser inputParser = new InputParser();
 
-        cparser.parse(args);
+        inputParser.parse(args);
     }
 }

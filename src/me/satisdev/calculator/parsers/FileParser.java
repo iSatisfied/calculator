@@ -1,4 +1,4 @@
-package me.satisdev.calculator;
+package me.satisdev.calculator.parsers;
 
 import java.io.IOException;
 import java.io.File;

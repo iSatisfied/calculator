@@ -2,10 +2,12 @@ package me.satisdev.calculator;
 
 import java.util.Scanner;
 
+import me.satisdev.calculator.parsers.FileParser;
+
 public class Calculator {
 
     private double first, second;
-    private String operator;
+    private Operators operator;
 
     private FileParser fparser;
     private Scanner scanner;
@@ -14,7 +16,7 @@ public class Calculator {
     public Calculator() {
         this.first = Double.NaN;
         this.second = Double.NaN;
-        this.operator = "";
+        this.operator = Operators.NONE;
 
         this.scanner = new Scanner(System.in);
         this.verifier = new Verifier();
@@ -33,9 +35,9 @@ public class Calculator {
                 continue;
             }
 
-            if (this.operator.isEmpty()) {
+            if (this.operator == Operators.NONE) {
                 System.out.print("\nPlease input a valid arithmetic operator: ");
-                this.operator = verifier.verifyOperator(scanner.next());
+                this.operator = verifier.verifyOperator(this.scanner.next());
 
                 continue;
             }
@@ -52,24 +54,6 @@ public class Calculator {
         verifier.result(this.first, this.operator, this.second);
     }
 
-    public void calculate(String input) {
-        for (String operator : verifier.operators) {
-            if (!input.contains(operator)) continue;
-
-            String[] numbers = operator.equals("+") || operator.equals("*")
-                              ? input.split("\\" + operator) : input.split(operator);
-
-            this.first = verifier.verifyNumber(numbers[0]);
-            this.second = verifier.verifyNumber(numbers[1]);
-
-            if (Double.isNaN(this.first) || Double.isNaN(this.second)) break;
-
-            verifier.result(this.first, operator, this.second);
-            return;
-        }
-        fparser.getFailureFile();
-    }
-
     public void calculate(String[] input) {
         this.first = verifier.verifyNumber(input[0]);
         this.operator = verifier.verifyOperator(input[1]);
@@ -77,7 +61,7 @@ public class Calculator {
 
         if (Double.isNaN(this.first) ||
             Double.isNaN(this.second) ||
-            operator.isEmpty()) {
+            this.operator == Operators.NONE) {
                 fparser.getFailureFile();
                 return;
         }

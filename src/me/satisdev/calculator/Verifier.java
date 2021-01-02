@@ -4,10 +4,6 @@ import java.lang.NumberFormatException;
 
 public class Verifier {
 
-    private double result;
-
-    protected static String[] operators = {"+", "-", "*", "/", "%"};
-
     public double verifyNumber(String input) {
         try {
             return Double.parseDouble(input);
@@ -16,40 +12,27 @@ public class Verifier {
         }
     }
 
-    public String verifyOperator(String input) {
-        for (String operator : operators) if (input.equals(operator)) return input;
+    public Operators verifyOperator(String input) {
+        if (input.length() > 1) return Operators.NONE;
 
-        return "";
+        for (Operators operator : Operators.values())
+            if (input.charAt(0) == operator.getOperator())
+                return operator;
+
+        return Operators.NONE;
     }
 
-    public void result(double first, String operator, double second) {
-        switch (operator) {
-            case "+":
-                result = Operations.add(first, second);
-                break;
+    public void result(double first, Operators operator, double second) {
+        double result = switch (operator) {
+            case ADDITION       -> Operations.add(first, second);
+            case SUBTRACTION    -> Operations.subtract(first, second);
+            case MULTIPLICATION -> Operations.multiply(first, second);
+            case DIVISION       -> Operations.divide(first, second);
+            case MODULUS        -> Operations.remainder(first, second);
+            case EXPONENT       -> Math.pow(first, second);
+            default             -> Double.NaN;
+        };
 
-            case "-":
-                result = Operations.subtract(first, second);
-                break;
-
-            case "*":
-                result =  Operations.multiply(first, second);
-                break;
-
-            case "/":
-                result =  Operations.divide(first, second);
-                break;
-
-            case "%":
-                result =  Operations.remainder(first, second);
-                break;
-
-            default:
-                result = Double.NaN;
-        }
-
-        System.out.println();
-        System.out.println(first + " " + operator + " " + second + " = " + result);
-        System.out.println();
+        System.out.println(first + " " + operator.getOperator() + " " + second + " = " + result);
     }
 }
