@@ -9,7 +9,7 @@ public class Calculator {
     private double first, second;
     private Operators operator;
 
-    private FileParser fparser;
+    private FileParser fileParser;
     private Scanner scanner;
     private Verifier verifier;
 
@@ -20,7 +20,7 @@ public class Calculator {
 
         this.scanner = new Scanner(System.in);
         this.verifier = new Verifier();
-        this.fparser = new FileParser();
+        this.fileParser = new FileParser();
     }
 
     public void calculate() {
@@ -62,7 +62,7 @@ public class Calculator {
         if (Double.isNaN(this.first) ||
             Double.isNaN(this.second) ||
             this.operator == Operators.NONE) {
-                fparser.getFailureFile();
+                fileParser.getFailureFile();
                 return;
         }
         verifier.result(this.first, operator, this.second);
