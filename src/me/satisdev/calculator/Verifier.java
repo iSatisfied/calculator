@@ -15,7 +15,7 @@ public class Verifier {
     public Operators verifyOperator(String input) {
         if (input.length() > 1) return Operators.NONE;
 
-        for (Operators operator : Operators.values())
+        for (var operator : Operators.values())
             if (input.charAt(0) == operator.getOperator())
                 return operator;
 
@@ -23,16 +23,8 @@ public class Verifier {
     }
 
     public void result(double first, Operators operator, double second) {
-        double result = switch (operator) {
-            case ADDITION       -> Operations.add(first, second);
-            case SUBTRACTION    -> Operations.subtract(first, second);
-            case MULTIPLICATION -> Operations.multiply(first, second);
-            case DIVISION       -> Operations.divide(first, second);
-            case MODULUS        -> Operations.remainder(first, second);
-            case EXPONENT       -> Math.pow(first, second);
-            default             -> Double.NaN;
-        };
+        var result = operator.apply(first, second);
 
-        System.out.println(first + " " + operator.getOperator() + " " + second + " = " + result);
+        System.out.println(first + " " + operator + " " + second + " = " + result);
     }
 }
