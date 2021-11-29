@@ -4,12 +4,12 @@ import me.satisdev.calculator.Calculator;
 
 public class InputParser {
 
-    private Calculator calc;
-    private FileParser fparser;
+    private final Calculator calc;
+    private final FileParser parser;
 
     public InputParser() {
         calc = new Calculator();
-        fparser = new FileParser();
+        parser = new FileParser();
     }
 
     public void parse(String[] input){
@@ -20,7 +20,7 @@ public class InputParser {
         } else if (input.length == 3) {
             calc.calculate(input);
         } else {
-            fparser.getFailureFile();
+            parser.getFailureFile();
         }
     }
 }

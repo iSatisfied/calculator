@@ -9,9 +9,9 @@ public class Calculator {
     private double first, second;
     private Operators operator;
 
-    private FileParser fileParser;
-    private Scanner scanner;
-    private Verifier verifier;
+    private final FileParser fileParser;
+    private final Scanner scanner;
+    private final Verifier verifier;
 
     public Calculator() {
         this.first = Double.NaN;
